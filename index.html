@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>С Днём Святого Валентина 💘</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fecfef, #fe99c0);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      color: white;
+      text-shadow: 0 0 15px rgba(255, 0, 100, 0.8);
+      z-index: 2;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 3em;
+      animation: pulse 2s infinite;
+    }
+
+    p {
+      font-size: 1.5em;
+      margin-top: 10px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* Летающие сердечки */
+    .heart {
+      position: absolute;
+      bottom: -50px;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: floatUp 8s linear infinite;
+      z-index: 1;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(45deg) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-800px) rotate(45deg) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    /* Кнопка */
+    .btn {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 30px;
+      background: #ff4d6d;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255, 0, 100, 0.7);
+      transition: all 0.3s;
+    }
+
+    .btn:hover {
+      background: #ff1744;
+      transform: scale(1.1);
+    }
+
+    /* Сюрприз */
+    .surprise {
+      margin-top: 20px;
+      font-size: 1.5em;
+      display: none;
+      animation: fadeIn 1.5s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>💖 С Днём Святого Валентина! 💖</h1>
+    <p>Ты для меня самое ценное в этом мире 🌹</p>
+    <button class="btn" onclick="showSurprise()">Нажми меня 💌</button>
+    <div class="surprise" id="surprise">
+      🌟 Я люблю тебя больше, чем слова могут выразить! 💕  
+      <br>💑 Ты — моё счастье, моя радость, моё всё! 💖
+    </div>
+  </div>
+
+  <script>
+    // Создание сердечек
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.background = ["#ff4d6d", "#ff1744", "#f50057"][Math.floor(Math.random() * 3)];
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 8000);
+    }
+
+    setInterval(createHeart, 500);
+
+    // Сюрприз
+    function showSurprise() {
+      document.getElementById("surprise").style.display = "block";
+    }
+  </script>
+</body>
+</html>
