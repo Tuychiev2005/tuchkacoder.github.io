@@ -26,18 +26,24 @@
 
     h1 {
       font-size: 3em;
-      animation: pulse 2s infinite;
+      animation: pulse 2s infinite, glow 3s infinite alternate;
     }
 
     p {
       font-size: 1.5em;
       margin-top: 10px;
+      animation: glow 4s infinite alternate;
     }
 
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.1); }
       100% { transform: scale(1); }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff1744; }
+      to { text-shadow: 0 0 20px #f50057, 0 0 40px #ff80ab; }
     }
 
     /* Летающие сердечки */
@@ -73,14 +79,25 @@
     }
 
     @keyframes floatUp {
-      0% {
-        transform: translateY(0) rotate(45deg) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-800px) rotate(45deg) scale(0.5);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) rotate(45deg) scale(1); opacity: 1; }
+      100% { transform: translateY(-800px) rotate(45deg) scale(0.5); opacity: 0; }
+    }
+
+    /* Летающие искорки */
+    .sparkle {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: sparkleMove 6s linear infinite;
+      box-shadow: 0 0 10px white;
+    }
+
+    @keyframes sparkleMove {
+      from { transform: translateY(0) scale(1); opacity: 1; }
+      to { transform: translateY(-600px) scale(0.5); opacity: 0; }
     }
 
     /* Кнопка */
@@ -110,9 +127,31 @@
       animation: fadeIn 1.5s ease-in-out forwards;
     }
 
+    .surprise img {
+      margin-top: 15px;
+      width: 180px;
+      height: auto;
+      filter: drop-shadow(0 0 15px rgba(255, 0, 100, 0.8));
+      animation: heartbeat 1.5s infinite ease-in-out, colorPulse 4s infinite alternate;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.8); }
       to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Анимация сердечка */
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.2); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.2); }
+    }
+
+    /* Переливающиеся цвета */
+    @keyframes colorPulse {
+      from { filter: drop-shadow(0 0 10px #ff4d6d); }
+      to { filter: drop-shadow(0 0 25px #ff80ab); }
     }
   </style>
 </head>
@@ -123,23 +162,34 @@
     <button class="btn" onclick="showSurprise()">Нажми меня 💌</button>
     <div class="surprise" id="surprise">
       🌟 Я люблю тебя больше, чем слова могут выразить! 💕  
-      <br>💑 Ты — моё счастье, моя радость, моё всё! 💖
+      <br>💑 Ты — моё счастье, моя радость, моё всё! 💖  
+      <br>
+      <img src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSJyZWQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIHZpZXdCb3g9IjAgMCAyNDAgMjQwIj48cGF0aCBkPSJNMTE5LjUgMjEzLjhsLTcuMy02LjhjLTQ1LjQtNDIuMy03NC45LTcwLjctOTguMi05NS45QzEwLjIgODMuNSA2LjUgNTkuMyAyMC4yIDQyLjdjMTMuNC0xNi4xIDM1LjQtMTkuOCA1MS41LTguN2MxMS42IDguMyAxOC42IDIwLjYgMjIuOSA0Mi41YzQuMy0yMS45IDExLjMtMzQuMiAyMi45LTQyLjUgMTYuMS0xMS4xIDM4LjEtNy40IDUxLjUgOC43IDEzLjcgMTYuNiAxMC4xIDQwLjgtNi4xIDY4LjRjLTIzLjMgMjUuMi01Mi44IDUzLjYtOTguMiA5NS45bC03LjMgNi44eiIvPjwvc3ZnPg==" alt="Сердце">
     </div>
   </div>
 
   <script>
-    // Создание сердечек
+    // Летающие сердечки
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
       heart.style.left = Math.random() * window.innerWidth + "px";
       heart.style.background = ["#ff4d6d", "#ff1744", "#f50057"][Math.floor(Math.random() * 3)];
       document.body.appendChild(heart);
-
       setTimeout(() => heart.remove(), 8000);
     }
-
     setInterval(createHeart, 500);
+
+    // Искорки
+    function createSparkle() {
+      const sparkle = document.createElement("div");
+      sparkle.className = "sparkle";
+      sparkle.style.left = Math.random() * window.innerWidth + "px";
+      sparkle.style.top = window.innerHeight + "px";
+      document.body.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 6000);
+    }
+    setInterval(createSparkle, 800);
 
     // Сюрприз
     function showSurprise() {
